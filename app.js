@@ -89,7 +89,7 @@ app.get("/projects", (req,res)=>{
                     if (output[inner_dict.year] === undefined){
                         output[inner_dict.year] = {"projects":[inner_dict],"length":1};
                     }else{
-                        output[inner_dict.year].members.push(inner_dict);
+                        output[inner_dict.year].projects.push(inner_dict);
                         output[inner_dict.year].length += 1;
                     }
                 }
