@@ -102,6 +102,30 @@ app.get("/projects", (req,res)=>{
     }
 });
 
+app.get("/about", (req,res)=>{
+    if (docStatus === 1){
+        doc.loadInfo().then(() => {
+            const sheet = doc.sheetsByIndex[3];
+            sheet.getRows().then((result)=>{
+                let output = [];
+                for (let item in result){
+                    let inner_dict = {}
+                    const data = result[item];
+                    const headers = data._sheet.headerValues;
+                    const rawdata = data._rawData;
+                    for(let index in headers){
+                        inner_dict[headers[index]] = rawdata[index];
+                    }
+                    output.push(inner_dict);
+                }
+                return res.status(200).send(output);
+            });
+        });
+    }else{
+        return res.status(500).send({"error":"Sheet is not ready"});
+    }
+});
+
 app.listen(process.env.PORT, () =>{
     console.log(`PES Innovation Lab API running on port ${process.env.PORT}!!`);
 });
