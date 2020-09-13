@@ -1,13 +1,17 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 require('dotenv').config();
 
+var docStatus = 0; // 0 - not ready 1 - ready
+
 // spreadsheet key is the long id in the sheets URL
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID);
-doc.useApiKey(process.env.API_KEY);
-
-var docStatus = 0; // 0 - not ready 1 - ready
-doc.loadInfo().then(() => {
-    docStatus = 1;
+doc.useServiceAccountAuth({
+    client_email: process.env.CLIENT_EMAIL,
+    private_key: process.env.CLIENT_KEY,
+}).then(() =>{
+    doc.loadInfo().then(() => {
+        docStatus = 1;
+    });
 });
 
 const express = require('express');
