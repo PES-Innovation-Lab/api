@@ -7,7 +7,7 @@ var docStatus = 0; // 0 - not ready 1 - ready
 const doc = new GoogleSpreadsheet(process.env.SHEET_ID);
 doc.useServiceAccountAuth({
     client_email: process.env.CLIENT_EMAIL,
-    private_key: process.env.CLIENT_KEY,
+    private_key: process.env.CLIENT_KEY.replace(/\\n/gm, '\n'),
 }).then(() =>{
     doc.loadInfo().then(() => {
         docStatus = 1;
