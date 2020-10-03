@@ -152,6 +152,52 @@ app.get("/publications", (req,res)=>{
     }
 });
 
+app.get("/events/:event", (req,res)=>{
+    let event;
+    //Map event to index
+    const eventName = req.params.event;
+    switch (eventName){
+        case 'hashcode':{event = 5; break;}
+        case 'incito':{event = 6; break;}
+        case 'internship':{event = 7; break;}
+        case 'roadshow':{event = 8;break;}
+        default:{
+            res.status(400).send();
+            return;
+        }
+    }
+    if (docStatus === 1){
+        doc.loadInfo().then(() => {
+            const sheet = doc.sheetsByIndex[event];
+            sheet.getRows().then((result)=>{
+                let output = [];
+                for (let item in result){
+                    let inner_dict = {}
+                    const data = result[item];
+                    const headers = data._sheet.headerValues;
+                    const rawdata = data._rawData;
+                    for(let index in headers){
+                        if (rawdata[index] === undefined){
+                            inner_dict[headers[index]] = "";
+                        }else{
+                            inner_dict[headers[index]] = rawdata[index];
+                        }
+                    }
+                    if (inner_dict["image_links"] !== undefined && inner_dict["image_links"] !== ""){
+                        inner_dict["image_links"] = inner_dict["image_links"].replace(/[\r\n]+/gm,"").split(",");
+                    }else{
+                        inner_dict["image_links"] = [];
+                    }
+                    output.push(inner_dict);
+                }
+                return res.status(200).send(output);
+            });
+        });
+    }else{
+        return res.status(500).send({"error":"Sheet is not ready"});
+    }
+});
+
 app.listen(process.env.PORT, () =>{
     console.log(`PES Innovation Lab API running on port ${process.env.PORT}!!`);
 });
