@@ -1,0 +1,103 @@
+openapi: 3.0.1
+info:
+  title: pil-api routes
+  description: defaultDescription
+  version: '0.1'
+servers:
+  - url: 'https://pil-api.herokuapp.com'
+paths:
+  /publications:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: 'https://pil-api.herokuapp.com'
+    servers:
+      - url: 'https://pil-api.herokuapp.com'
+  /projects:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+      servers:
+        - url: 'https://pil-api.herokuapp.com'
+    servers:
+      - url: 'https://pil-api.herokuapp.com'
+  /about:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: 'https://pil-api.herokuapp.com'
+    servers:
+      - url: 'https://pil-api.herokuapp.com'
+  /events/hashcode:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: 'https://pil-api.herokuapp.com'
+    servers:
+      - url: 'https://pil-api.herokuapp.com'
+  /members:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+      servers:
+        - url: 'https://pil-api.herokuapp.com'
+    servers:
+      - url: 'https://pil-api.herokuapp.com'
+  /stats:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: 'https://pil-api.herokuapp.com'
+    servers:
+      - url: 'https://pil-api.herokuapp.com'
+  /:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            text/html; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+      servers:
+        - url: 'https://pil-api.herokuapp.com'
+    servers:
+      - url: 'https://pil-api.herokuapp.com'
