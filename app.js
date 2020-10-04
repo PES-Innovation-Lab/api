@@ -10,7 +10,7 @@ doc.useServiceAccountAuth({
     private_key: process.env.CLIENT_KEY.replace(/\\n/gm, '\n'),
 }).then(() =>{
     docStatus = 1;
-});
+}).catch(()=> console.error(" Error at clearServiceAccountAuth"));
 
 const express = require('express');
 var cors = require('cors');
@@ -189,6 +189,40 @@ app.get("/events/:event", (req,res)=>{
                         inner_dict["image_links"] = [];
                     }
                     output.push(inner_dict);
+                }
+                return res.status(200).send(output);
+            });
+        });
+    }else{
+        return res.status(500).send({"error":"Sheet is not ready"});
+    }
+});
+
+app.get("/students/:student/projects", (req,res)=>{
+    const studentName = req.params.student;
+    if (docStatus === 1){
+        doc.loadInfo().then(() => {
+            const sheet = doc.sheetsByIndex[0];
+            sheet.getRows().then((result)=>{
+                let output = {
+                    mentored: studentName,
+                    projects: []
+                };
+                for (let item in result){
+                    let inner_dict = {}
+                    const data = result[item];
+                    const headers = data._sheet.headerValues;
+                    const rawdata = data._rawData;
+
+                    for(let index in headers){
+                        inner_dict[headers[index]] = rawdata[index];
+                    }
+
+                    const { mentored , workedon } = inner_dict;
+
+                    if ( mentored == studentName ){
+                        output.projects.push( workedon );
+                    }
                 }
                 return res.status(200).send(output);
             });
