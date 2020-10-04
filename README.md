@@ -56,17 +56,17 @@ Each tab contains data about that particular activity / archive / event / statis
 
 ### Index 0 - projects
 
-|      HEADINGS       |          batch           |     name     |        grad_batch        |                    branch                     |   linkedin   |     email      |       github       |        picture_url         |
-| :-----------------: | :----------------------: | :----------: | :----------------------: | :-------------------------------------------: | :----------: | :------------: | :----------------: | :------------------------: |
-| DATA REPRESENTATION |          string          |    string    |          string          |                    string                     | string (url) | string (email) |    string (url)    |           string           |
-|     DESCRIPTION     | Student internship batch | Student name | Student graduating batch | Which branch of engineering the student is in | LinkedIn URL |    Email ID    | GitHub profile URL | URL of the display picture |
-
-### Index 1 - members
-
 |      HEADINGS       |             year             |     title     |        short_description         |        long_description         |               keywords               |               mentors               |               interns               |    poster_url     |
 | :-----------------: | :--------------------------: | :-----------: | :------------------------------: | :-----------------------------: | :----------------------------------: | :---------------------------------: | :---------------------------------: | :---------------: |
 | DATA REPRESENTATION |            string            |    string     |              string              |             string              |       string (comma delimited)       |      string (comma delimited)       |      string (comma delimited)       |      string       |
 |     DESCRIPTION     | Year of starting the project | Project title | Short description of the project | Long description of the project | List of keywords separated by commas | List of mentors separated by commas | List of interns separated by commas | URL of the poster |
+
+### Index 1 - members
+
+|      HEADINGS       |          batch           |     name     |        grad_batch        |                    branch                     |   linkedin   |     email      |       github       |        picture_url         |
+| :-----------------: | :----------------------: | :----------: | :----------------------: | :-------------------------------------------: | :----------: | :------------: | :----------------: | :------------------------: |
+| DATA REPRESENTATION |          string          |    string    |          string          |                    string                     | string (url) | string (email) |    string (url)    |           string           |
+|     DESCRIPTION     | Student internship batch | Student name | Student graduating batch | Which branch of engineering the student is in | LinkedIn URL |    Email ID    | GitHub profile URL | URL of the display picture |
 
 ### Index 2 - statistics
 
