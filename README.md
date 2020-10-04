@@ -15,6 +15,8 @@ Dynamic data is fetched from an API server running on Heroku at [PES Innovation 
 
 The API is written in nodeJS and uses express and the Sheets API.
 
+API documentation is available at: [PES Innovation Lab API reference](https://pil-api.readme.io/reference)
+
 ## Setting up your development environment :
 
 1. Clone the repository after forking.
