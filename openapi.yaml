@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: pil-api routes
   description: defaultDescription
-  version: '0.1'
+  version: '1.0'
 servers:
   - url: 'https://pil-api.herokuapp.com'
 paths:
