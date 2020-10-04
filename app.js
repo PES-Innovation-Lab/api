@@ -232,6 +232,8 @@ app.get("/students/:student/projects", (req,res)=>{
     }
 });
 
-app.listen(process.env.PORT, () =>{
-    console.log(`PES Innovation Lab API running on port ${process.env.PORT}!!`);
+const port = process.env.PORT || 3000;
+
+app.listen(port, () =>{
+    console.log(`PES Innovation Lab API running on port ${port}!!`);
 });
