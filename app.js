@@ -201,7 +201,8 @@ app.get("/events/:event", (req,res)=>{
 });
 
 app.post("/projects/student", (req,res)=>{
-    const {studentName} = req.body;
+    let { studentName } = req.body;
+    studentName = studentName.toLowerCase();
     if (docStatus === 1){
         doc.loadInfo().then(() => {
             const sheet = doc.sheetsByIndex[0];
@@ -219,14 +220,14 @@ app.post("/projects/student", (req,res)=>{
                     for(let index in headers){
                         inner_dict[headers[index]] = rawdata[index];
                     }
-
+                    
                     const { interns, mentors } = inner_dict;
 
-                    if ( interns.includes(studentName ) ){
+                    if ( interns.toLocaleLowerCase().includes( studentName ) ){
                         output.intern.push( inner_dict );
                     }
 
-                    if ( mentors.includes(studentName) ){
+                    if ( mentors.toLocaleLowerCase().includes( studentName) ){
                         output.mentor.push( inner_dict );
                     }
                 }
