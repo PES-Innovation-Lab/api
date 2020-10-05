@@ -206,7 +206,10 @@ app.post("/projects/student", (req,res)=>{
         doc.loadInfo().then(() => {
             const sheet = doc.sheetsByIndex[0];
             sheet.getRows().then((result)=>{
-                let output = [];
+                let output = {
+                    mentor: [],
+                    intern: []
+                };
                 for (let item in result){
                     let inner_dict = {}
                     const data = result[item];
@@ -219,8 +222,12 @@ app.post("/projects/student", (req,res)=>{
 
                     const { interns, mentors } = inner_dict;
 
-                    if ( interns.includes(studentName) || mentors.includes(studentName) ){
-                        output.push( inner_dict );
+                    if ( interns.includes(studentName ) ){
+                        output.intern.push( inner_dict );
+                    }
+
+                    if ( mentors.includes(studentName) ){
+                        output.mentor.push( inner_dict );
                     }
                 }
                 return res.status(200).send(output);
