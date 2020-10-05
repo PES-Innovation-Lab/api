@@ -18,6 +18,8 @@ const app = express();
 
 app.use(cors());
 
+app.use(express.json());
+
 app.get("/", (req,res) => {
     return res.status(200).send("Ohaiyo!");
 });
@@ -198,16 +200,13 @@ app.get("/events/:event", (req,res)=>{
     }
 });
 
-app.get("/students/:student/projects", (req,res)=>{
-    const studentName = req.params.student;
+app.post("/projects/student", (req,res)=>{
+    const {studentName} = req.body;
     if (docStatus === 1){
         doc.loadInfo().then(() => {
             const sheet = doc.sheetsByIndex[0];
             sheet.getRows().then((result)=>{
-                let output = {
-                    mentored: studentName,
-                    projects: []
-                };
+                let output = [];
                 for (let item in result){
                     let inner_dict = {}
                     const data = result[item];
@@ -218,10 +217,10 @@ app.get("/students/:student/projects", (req,res)=>{
                         inner_dict[headers[index]] = rawdata[index];
                     }
 
-                    const { mentored , workedon } = inner_dict;
+                    const { interns, mentors } = inner_dict;
 
-                    if ( mentored == studentName ){
-                        output.projects.push( workedon );
+                    if ( interns.includes(studentName) || mentors.includes(studentName) ){
+                        output.push( inner_dict );
                     }
                 }
                 return res.status(200).send(output);
