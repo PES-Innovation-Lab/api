@@ -223,11 +223,11 @@ app.post("/projects/student", (req,res)=>{
                     
                     const { interns, mentors } = inner_dict;
 
-                    if ( interns.toLocaleLowerCase().includes( studentName ) ){
+                    if ( interns.toLowerCase().includes( studentName ) ){
                         output.intern.push( inner_dict );
                     }
 
-                    if ( mentors.toLocaleLowerCase().includes( studentName) ){
+                    if ( mentors.toLowerCase().includes( studentName) ){
                         output.mentor.push( inner_dict );
                     }
                 }
