@@ -6,6 +6,25 @@ info:
 servers:
   - url: 'https://pil-api.herokuapp.com'
 paths:
+  /projects/student:
+    post:
+      description: Auto generated using Swagger Inspector
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/student'
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/studentResponse'
+      servers:
+        - url: 'https://pil-api.herokuapp.com'
+    servers:
+      - url: 'https://pil-api.herokuapp.com'
   /publications:
     get:
       description: Auto generated using Swagger Inspector
@@ -101,3 +120,54 @@ paths:
         - url: 'https://pil-api.herokuapp.com'
     servers:
       - url: 'https://pil-api.herokuapp.com'
+
+components:
+  schemas:
+    studentResponse:
+      type: object
+      properties:
+        mentor:
+          type: array
+          items:
+            $ref: '#/components/schemas/project'
+        intern:
+          type: array
+          items:
+            $ref: '#/components/schemas/project'
+    project:
+      type: object
+      properties:
+        year:
+          type: string
+          example: '2014'
+        title:
+          type: string
+          example: 'Arrhythmia Classification'
+        short_description:
+          type: string
+          example: 'Multi-Hop Dynamic Routing Algo...'
+        long_description:
+          type: string
+          example: ''
+        keywords:
+          type: string
+          example: 'innovation'
+        mentors:
+          type: string
+          example: 'Saksham Goyal'
+        interns:
+          type: string
+          example: 'Saahil Jain, Kavya S, Vishwa Pravin'
+        poster_url:
+          type: string
+          example: 'images/dynamicroutingposter.jpg'
+        
+    student:
+      type: object
+      properties:
+        studentName:
+          type: string
+          example: 'Saksham Goyal'
+      required: 
+        - studentName
+        
