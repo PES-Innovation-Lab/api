@@ -10,13 +10,16 @@ doc.useServiceAccountAuth({
     private_key: process.env.CLIENT_KEY.replace(/\\n/gm, '\n'),
 }).then(() =>{
     docStatus = 1;
-});
+}).catch(()=> console.error(" Error at clearServiceAccountAuth"));
 
 const express = require('express');
 var cors = require('cors');
+const { in_array } = require('./helper');
 const app = express();
 
 app.use(cors());
+
+app.use(express.json());
 
 app.get("/", (req,res) => {
     return res.status(200).send("Ohaiyo!");
@@ -198,6 +201,57 @@ app.get("/events/:event", (req,res)=>{
     }
 });
 
-app.listen(process.env.PORT, () =>{
-    console.log(`PES Innovation Lab API running on port ${process.env.PORT}!!`);
+app.post("/projects/student", (req, res, next)=>{
+    try {
+        req.body.studentName = req.body.studentName.toLowerCase();
+        const regex = /^[a-zA-Z ]{2,90}$/;
+        if ( !regex.test(req.body.studentName) ){
+            throw "invalid";
+        }
+    } catch (error) {
+        return res.status(400).send({"error":"Student name is not present or invalid"});   
+    }
+    next();
+}, (req, res)=>{
+    const { studentName } = req.body;
+    if (docStatus === 1){
+        doc.loadInfo().then(() => {
+            const sheet = doc.sheetsByIndex[0];
+            sheet.getRows().then((result)=>{
+                let output = {
+                    mentor: [],
+                    intern: []
+                };
+                for (let item in result){
+                    let inner_dict = {}
+                    const data = result[item];
+                    const headers = data._sheet.headerValues;
+                    const rawdata = data._rawData;
+
+                    for(let index in headers){
+                        inner_dict[headers[index]] = rawdata[index];
+                    }
+                    
+                    const { interns, mentors } = inner_dict;
+
+                    if (  in_array( interns , studentName ) ){
+                        output.intern.push( inner_dict );
+                    }
+
+                    if (  in_array( mentors , studentName ) ){
+                        output.mentor.push( inner_dict );
+                    }
+                }
+                return res.status(200).send(output);
+            });
+        });
+    }else{
+        return res.status(500).send({"error":"Sheet is not ready"});
+    }
+});
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, () =>{
+    console.log(`PES Innovation Lab API running on port ${port}!!`);
 });
