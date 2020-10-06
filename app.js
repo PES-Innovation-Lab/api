@@ -14,6 +14,7 @@ doc.useServiceAccountAuth({
 
 const express = require('express');
 var cors = require('cors');
+const in_array = require('./helper');
 const app = express();
 
 app.use(cors());
@@ -200,9 +201,19 @@ app.get("/events/:event", (req,res)=>{
     }
 });
 
-app.post("/projects/student", (req,res)=>{
-    let { studentName } = req.body;
-    studentName = studentName.toLowerCase();
+app.post("/projects/student", (req, res, next)=>{
+    try {
+        req.body.studentName =  req.body.studentName.toLowerCase();
+        const regex = /^[a-zA-Z ]{2,90}$/;
+        if ( !regex.test(req.body.studentName) ){
+            throw "invalid";
+        }
+    } catch (error) {
+        return res.status(400).send({"error":"Student name is not present or invalid"});   
+    }
+    next();
+}, (req, res)=>{
+    const { studentName } = req.body;
     if (docStatus === 1){
         doc.loadInfo().then(() => {
             const sheet = doc.sheetsByIndex[0];
@@ -223,11 +234,11 @@ app.post("/projects/student", (req,res)=>{
                     
                     const { interns, mentors } = inner_dict;
 
-                    if ( interns.toLowerCase().includes( studentName ) ){
+                    if (  in_array( interns , studentName ) ){
                         output.intern.push( inner_dict );
                     }
 
-                    if ( mentors.toLowerCase().includes( studentName) ){
+                    if (  in_array( mentors , studentName ) ){
                         output.mentor.push( inner_dict );
                     }
                 }
