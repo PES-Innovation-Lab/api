@@ -14,7 +14,7 @@ doc.useServiceAccountAuth({
 
 const express = require('express');
 var cors = require('cors');
-const in_array = require('./helper');
+const { in_array } = require('./helper');
 const app = express();
 
 app.use(cors());
@@ -203,7 +203,7 @@ app.get("/events/:event", (req,res)=>{
 
 app.post("/projects/student", (req, res, next)=>{
     try {
-        req.body.studentName =  req.body.studentName.toLowerCase();
+        req.body.studentName = req.body.studentName.toLowerCase();
         const regex = /^[a-zA-Z ]{2,90}$/;
         if ( !regex.test(req.body.studentName) ){
             throw "invalid";

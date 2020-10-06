@@ -5,4 +5,6 @@ const in_array = ( str_comma_separated, word ) => {
     });
 };
 
-module.exports = in_array;
+module.exports = {
+    in_array,
+}
